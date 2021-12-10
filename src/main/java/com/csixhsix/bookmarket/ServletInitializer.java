@@ -1,4 +1,4 @@
-package com.csixhsix.boomarket;
+package com.csixhsix.bookmarket;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;

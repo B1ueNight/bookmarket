@@ -1,4 +1,4 @@
-package com.csixhsix.boomarket;
+package com.csixhsix.bookmarket;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
