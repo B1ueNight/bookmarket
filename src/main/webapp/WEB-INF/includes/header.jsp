@@ -18,7 +18,7 @@
             <div class="user_menu">
                 <a href="#" id="profile_img">
                     <img src="http://placekitten.com/100/100">
-                    <span>수정하기</span>
+                    <span>프로필 수정</span>
                 </a>
                 <a href="#" id="user_name">관리자(admin)</a>
                 <a href="#" id="logout"><i class="fas fa-sign-out-alt"></i>로그아웃</a>
