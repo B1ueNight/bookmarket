@@ -18,8 +18,8 @@ public class BookstoreService {
         List<Integer> bookCntList = new ArrayList<Integer>();
         bookCntList.add(mapper.TotalBookCnt());
         bookCntList.add(mapper.sellOffBookCnt());
-        bookCntList.add(mapper.NewBookcnt());
-        bookCntList.add(mapper.SoldoutBookcnt());
+        bookCntList.add(mapper.NewBookCnt());
+        bookCntList.add(mapper.CategoryCnt());
 
         List<Integer> userCntList = new ArrayList<Integer>();
         userCntList.add(mapper.TotalUserCnt());
@@ -35,7 +35,7 @@ public class BookstoreService {
         Map<String, Object> map = new LinkedHashMap<String, Object>();
         map.put("book", bookCntList);
         map.put("user", userCntList);
-        map.put("comapny", companyCntList);
+        map.put("company", companyCntList);
         map.put("writer", writerCntList);
         return map;
     

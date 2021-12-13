@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.csixhsix.bookmarket.mapper.CategoryMapper">
+
+    <select id="getCategoryInfo" resultType="com.csixhsix.bookmarket.data.CategoryVO">
+        select * from category_info order by cate_seq desc limit 10 offset #{offset}
+    </select>
+    <select id="getCategoryCount" resultType="java.lang.Integer">
+        select count(*) from category_info
+    </select>
+    <insert id="addCategory">
+        insert into category_info (cate_name, cate_code)
+        values(#{cate_name}, #{cate_code})
+    </insert>
+    <delete id="deleteCategory">
+        delete from category_info where cate_seq=#{seq}
+    </delete>
+</mapper>

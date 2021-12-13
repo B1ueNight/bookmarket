@@ -6,8 +6,8 @@ import org.apache.ibatis.annotations.Mapper;
 public interface StoreBoardMapper {
     public Integer TotalBookCnt();
     public Integer sellOffBookCnt();
-    public Integer NewBookcnt();
-    public Integer SoldoutBookcnt();
+    public Integer NewBookCnt();
+    public Integer CategoryCnt();
 
     public Integer TotalUserCnt();
     public Integer NewUserCnt();

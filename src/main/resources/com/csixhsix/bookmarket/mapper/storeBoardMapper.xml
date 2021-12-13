@@ -8,11 +8,11 @@
     <select id="sellOffBookCnt" resultType="java.lang.Integer">
         select count(*) from sell_info
     </select>
-    <select id="NewBookcnt" resultType="java.lang.Integer">
+    <select id="NewBookCnt" resultType="java.lang.Integer">
         select count(*) from book_info where bi_status=1
     </select>
-    <select id="SoldoutBookcnt" resultType="java.lang.Integer">
-        select count(*) from book_info where bi_status=3
+    <select id="CategoryCnt" resultType="java.lang.Integer">
+        select count(*) from category_info
     </select>
 
 
@@ -20,10 +20,10 @@
         select count(*) from user_info
     </select>
     <select id="NewUserCnt" resultType="java.lang.Integer">
-        select count(*) from user_info where user_status=1
+        select count(*) from user_info where ui_status=1
     </select>
     <select id="LeaveUserCnt" resultType="java.lang.Integer">
-        select count(*) from user_info where user_status=2
+        select count(*) from user_info where ui_status=2
     </select>
 
 
