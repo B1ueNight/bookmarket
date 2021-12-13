@@ -2,7 +2,7 @@ package com.csixhsix.bookmarket.controller;
 
 import java.util.Map;
 
-import com.csixhsix.bookmarket.service.CategoryService;
+import com.csixhsix.bookmarket.service.WriterService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
@@ -12,13 +12,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-public class CategoryController {
-    @Autowired CategoryService service;
-
-    @GetMapping("/category")
-    public String getCategory(Model model, @RequestParam @Nullable Integer offset) {
-        Map<String, Object> resultMap = service.getCategoryList(offset);
+public class WriterController {
+    @Autowired WriterService service;
+    @GetMapping("/writer")
+    public String getBook(Model model, @RequestParam @Nullable Integer offset) {
+        Map<String, Object> resultMap = service.getWriterList(offset);
         model.addAttribute("data", resultMap);
-        return "/category/list";
+        return "/writer/list";
     }
 }

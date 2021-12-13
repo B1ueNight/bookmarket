@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.csixhsix.bookmarket.mapper.WriterMapper">
+
+    <select id="getWriterInfo" resultType="com.csixhsix.bookmarket.data.WriterVO">
+        select * from writer_info order by wi_seq desc limit 10 offset #{offset}
+    </select>
+    <select id="getWriterCount" resultType="java.lang.Integer">
+        select count(*) from writer_info
+    </select>
+    <insert id="addWriter">
+        insert into writer_info (wi_name, wi_birth, wi_email, wi_book_title)
+        values(#{wi_name}, #{wi_birth}, #{wi_email}, #{wi_book_title})
+    </insert>
+    <delete id="deleteWriter">
+        delete from writer_info where wi_seq=#{seq}
+    </delete>
+</mapper>

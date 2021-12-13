@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.csixhsix.bookmarket.mapper.CompanyMapper">
+
+    <select id="getCompanyInfo" resultType="com.csixhsix.bookmarket.data.CompanyVO">
+        select * from company_info order by ci_seq desc limit 10 offset #{offset}
+    </select>
+    <select id="getCompanyCount" resultType="java.lang.Integer">
+        select count(*) from company_info
+    </select>
+    <insert id="addCompany">
+        insert into company_info (ci_name, ci_address, ci_phone, ci_email, ci_book_title)
+        values(#{ci_name}, #{ci_address}, #{ci_phone}, #{ci_email}, #{ci_book_title})
+    </insert>
+    <delete id="deleteCompany">
+        delete from company_info where ci_seq=#{seq}
+    </delete>
+</mapper>
