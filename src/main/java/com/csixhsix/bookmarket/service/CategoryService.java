@@ -4,6 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.csixhsix.bookmarket.data.CategoryHistoryVO;
 import com.csixhsix.bookmarket.data.CategoryVO;
 import com.csixhsix.bookmarket.mapper.CategoryMapper;
 
@@ -54,6 +55,15 @@ public class CategoryService {
         mapper.addCategory(data);
         resultMap.put("status", true);
         resultMap.put("message", "카테고리가 추가되었습니다.");
+
+        Integer seq = mapper.selectLatestDataSeq();
+        CategoryHistoryVO history = new CategoryHistoryVO();
+        history.setCath_cate_seq(seq);
+        history.setCath_type("new");
+        String content = data.getCate_name()+"|"+data.getCate_code();
+        history.setCath_content(content);
+
+        mapper.insertCategoryHistory(history);
         
         return resultMap;
     }
@@ -63,6 +73,13 @@ public class CategoryService {
         mapper.deleteCategory(seq);
         resultMap.put("status", true);
         resultMap.put("message", "카테고리가 삭제되었습니다.");
+        
+        CategoryHistoryVO history = new CategoryHistoryVO();
+        history.setCath_cate_seq(seq);
+        history.setCath_type("delete");
+
+        mapper.insertCategoryHistory(history);
+
         return resultMap;
     
     }
@@ -80,6 +97,15 @@ public class CategoryService {
 
         resultMap.put("status", true);
         resultMap.put("message", "수정되었습니다.");
+
+        CategoryHistoryVO history = new CategoryHistoryVO();
+        history.setCath_cate_seq(data.getCate_seq());
+        history.setCath_type("update");
+        String content = data.getCate_name()+"|"+data.getCate_code();
+        history.setCath_content(content);
+
+        mapper.insertCategoryHistory(history);
+
         return resultMap;
     }
 }

@@ -23,4 +23,11 @@
         update category_info
         set cate_name=#{cate_name}, cate_code=#{cate_code}, cate_mod_dt=NOW() where cate_seq=#{cate_seq}
     </update>
+    <select id="selectLatestDataSeq" resultType="java.lang.Integer">
+        select cate_seq from category_info order by cate_seq desc limit 1
+    </select>
+    <insert id="insertCategoryHistory">
+        insert INTO bookstore_work_db.category_history(cath_type, cath_content, cath_cate_seq)
+        VALUES(#{cath_type}, #{cath_content}, #{cath_cate_seq})
+    </insert>
 </mapper>
