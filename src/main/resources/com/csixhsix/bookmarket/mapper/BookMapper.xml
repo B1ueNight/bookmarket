@@ -16,4 +16,12 @@
     <delete id="deleteBook">
         delete from book_info where bi_seq=#{seq}
     </delete>
+    <select id="getBookInfoBySeq" resultType="com.csixhsix.bookmarket.data.BookVO">
+        select * from book_info where bi_seq=#{seq}
+    </select>
+    <update id="updateBook">
+        update book_info
+        set bi_name=#{di_name}, bi_sub=#{bi_sub}, bi_cop=#{bi_cop}, bi_cate=#{bi_cate}, bi_status=#{bi_status}, bi_stock=#{bi_stock},
+        bi_pub_dt=#{bi_pub_dt}, bi_writer=#{bi_writer}, bi_point=#{bi_point} bi_mod_dt=NOW() where bi_seq=#{bi_seq}
+    </update>
 </mapper>

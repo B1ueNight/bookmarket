@@ -12,5 +12,6 @@ public interface BookMapper {
     public Integer getBookCount();
     public void addBook(BookVO data);
     public void deleteBook(Integer seq);
-    public void modifyBook(BookVO data);
+    public BookVO getBookInfoBySeq(Integer seq);
+    public void updateBook(BookVO data);
 }

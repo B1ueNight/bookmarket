@@ -4,10 +4,10 @@
 <mapper namespace="com.csixhsix.bookmarket.mapper.CategoryMapper">
 
     <select id="getCategoryInfo" resultType="com.csixhsix.bookmarket.data.CategoryVO">
-        select * from category_info order by cate_seq desc limit 10 offset #{offset}
+        select * from category_info where cate_name like #{keyword} order by cate_seq desc limit 10 offset #{offset}
     </select>
     <select id="getCategoryCount" resultType="java.lang.Integer">
-        select count(*) from category_info
+        select count(*) from category_info where cate_name like #{keyword}
     </select>
     <insert id="addCategory">
         insert into category_info (cate_name, cate_code)
@@ -16,4 +16,11 @@
     <delete id="deleteCategory">
         delete from category_info where cate_seq=#{seq}
     </delete>
+    <select id="getCategoryInfoBySeq" resultType="com.csixhsix.bookmarket.data.CategoryVO">
+        select * from category_info where cate_seq=#{seq}
+    </select>
+    <update id="updateCategory">
+        update category_info
+        set cate_name=#{cate_name}, cate_code=#{cate_code}, cate_mod_dt=NOW() where cate_seq=#{cate_seq}
+    </update>
 </mapper>

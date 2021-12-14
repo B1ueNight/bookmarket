@@ -86,16 +86,22 @@ public class BookService {
         resultMap.put("status", true);
         resultMap.put("message", "도서가 삭제되었습니다.");
         return resultMap;
-    
-    }
 
-    public Map<String, Object> modifyBook(BookVO data){
+    }
+    public Map<String, Object> getBookInfoBySeq(Integer seq) {
         Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
-        mapper.modifyBook(data);
+
         resultMap.put("status", true);
-        resultMap.put("message", "도서가 수정되었습니다.");
+        resultMap.put("data", mapper.getBookInfoBySeq(seq));
         return resultMap;
     }
+    public Map<String, Object> updateBook(BookVO data){
+        Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
+        
+        mapper.updateBook(data);
 
-    
+        resultMap.put("status", true);
+        resultMap.put("message", "수정되었습니다.");
+        return resultMap;
+    }
 }

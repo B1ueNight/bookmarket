@@ -7,6 +7,7 @@ import com.csixhsix.bookmarket.service.BookService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,8 +25,12 @@ public class BookAPIController {
     public Map<String, Object> deleteBook(@RequestParam Integer seq){
         return service.deleteBook(seq);
     }
-    @PatchMapping("/book/modify")
-    public Map<String, Object> patchBook(@RequestBody BookVO data){
-        return service.modifyBook(data);
+    @GetMapping("/book/get")
+    public Map<String,Object> getBookInfoBySeq(@RequestParam Integer seq) {
+        return service.getBookInfoBySeq(seq);
+    }
+    @PatchMapping("/book/update")
+    public Map<String,Object> patchDepartmentInfo(@RequestBody BookVO data) {
+        return service.updateBook(data);
     }
 }

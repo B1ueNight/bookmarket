@@ -7,6 +7,7 @@ import com.csixhsix.bookmarket.service.CategoryService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,9 +25,13 @@ public class CategoryAPIController {
     public Map<String, Object> deleteCategory(@RequestParam Integer seq){
         return service.deleteCategory(seq);
     }
-    @PatchMapping("/category/modify")
-    public Map<String, Object> patchCategory(@RequestBody CategoryVO data){
-        return service.modifyCategory(data);
+    @GetMapping("/category/get")
+    public Map<String,Object> getCategoryInfoBySeq(@RequestParam Integer seq) {
+        return service.getCategoryInfoBySeq(seq);
+    }
+    @PatchMapping("/category/update")
+    public Map<String,Object> patchCategoryInfo(@RequestBody CategoryVO data) {
+        return service.updateCategory(data);
     }
 
     

@@ -13,13 +13,21 @@ import org.springframework.stereotype.Service;
 @Service
 public class CategoryService {
     @Autowired CategoryMapper mapper;
-    public Map<String, Object> getCategoryList(Integer offset) {
-        if(offset == null) offset=0;
-
+    public Map<String, Object> getCategoryList(Integer offset, String keyword) {
         Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
-        List<CategoryVO> list = mapper.getCategoryInfo(offset);
+        if(offset == null) {
+            offset=0;
+            resultMap.put("offset", offset);}
+        if(keyword == null) {
+            keyword="%%";
+            resultMap.put("offset", offset);}
+        else {
+            resultMap.put("keyword", keyword);
+            keyword = "%"+keyword+"%";}
+            
+        List<CategoryVO> list = mapper.getCategoryInfo(offset, keyword);
 
-        Integer cnt = mapper.getCategoryCount();
+        Integer cnt = mapper.getCategoryCount(keyword);
         Integer page_cnt = cnt / 10;
         if(cnt % 10 > 0) page_cnt++;
 
@@ -58,14 +66,20 @@ public class CategoryService {
         return resultMap;
     
     }
-
-    public Map<String, Object> modifyCategory(CategoryVO data){
+    public Map<String, Object> getCategoryInfoBySeq(Integer seq) {
         Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
-        mapper.modifyCategory(data);
+
         resultMap.put("status", true);
-        resultMap.put("message", "카테고리가 수정되었습니다.");
+        resultMap.put("data", mapper.getCategoryInfoBySeq(seq));
         return resultMap;
     }
+    public Map<String, Object> updateCategory(CategoryVO data){
+        Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
+        
+        mapper.updateCategory(data);
 
-
+        resultMap.put("status", true);
+        resultMap.put("message", "수정되었습니다.");
+        return resultMap;
+    }
 }

@@ -21,5 +21,5 @@ public class BookVO {
     private String bi_writer;
     private Integer bi_point;
     private Date bi_reg_dt;
-    
+    private Date bi_mod_dt;
 }

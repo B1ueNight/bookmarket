@@ -12,4 +12,5 @@ public class CategoryVO {
     private String cate_code;
     private Date cate_reg_dt;
     private Integer cate_stock;
+    private Date Cate_mod_dt;
 }

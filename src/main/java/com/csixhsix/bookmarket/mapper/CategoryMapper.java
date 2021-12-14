@@ -8,9 +8,10 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface CategoryMapper {
-    public List<CategoryVO> getCategoryInfo(Integer offset);
-    public Integer getCategoryCount();
+    public List<CategoryVO> getCategoryInfo(Integer offset, String keyword);
+    public Integer getCategoryCount(String keyword);
     public void addCategory(CategoryVO data);
     public void deleteCategory(Integer seq);
-    public void modifyCategory(CategoryVO data);
+    public CategoryVO getCategoryInfoBySeq(Integer seq);
+    public void updateCategory(CategoryVO data);
 }

@@ -31,7 +31,6 @@ main > h1 {font-size: 36px; padding-bottom: 30px; margin-bottom: 30px; border-bo
 .table_area tbody td:first-child {border-radius: 5px 0 0 5px;}
 .table_area tbody td:first-last {border-radius: 0 5px 5px 0;}
 .table_area tbody td button {margin: 0 5px; background-color: transparent; border: 0; padding: 0; font-size: 20px; cursor: pointer;}
-.modify_btn {color: rgb(73, 73, 93);}
 .delete_btn {color: rgb(224, 81, 81);}
 
 .pager_area {text-align: center; padding-top: 30px;}
@@ -61,12 +60,14 @@ main > h1 {font-size: 36px; padding-bottom: 30px; margin-bottom: 30px; border-bo
 .popup .pager_area p {margin-top: 10px; color: #555;}
 
 .popup .content_area {padding: 40px 0; width: 350px; margin: 0 auto; font-size: 0;}
-#cate_name, #cate_code { width: 100%; padding: 0; margin: 0; border: 1px solid #ccc; font-size: 16px; 
+#cate_name, #cate_code, #cate_mod_dt { width: 100%; padding: 0; margin: 0; border: 1px solid #ccc; font-size: 16px; 
         font-weight: 400; padding: 10px 20px; box-sizing: border-box; border-radius: 15px; margin-bottom: 15px; outline: none;}
 
 .btn_area { text-align: center;}
 .btn_area button {border: 0; font-size: 18px; padding: 10px 30px; margin: 0 10px; color: #fff;}
 .btn_area #add_cate {background-color: rgb(59, 121, 255)}
 .btn_area #add_cate:hover {background-color: rgb(19, 79, 207);}
+.btn_area #modify_cate {background-color: #999;}
+.btn_area #modify_cate:hover {background-color: #333;}
 .btn_area #cancel_cate { background-color: rgb(105, 105, 105);}
 .btn_area #cancel_cate:hover { background-color: rgb(49, 49, 49);}

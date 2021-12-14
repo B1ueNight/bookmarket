@@ -18,7 +18,7 @@
         <div class="content_area">
                 <div class="menu_area">
                     <div class="search_box">
-                        <input type="text" id="keyword" placeholder="검색어 입력">
+                        <input type="text" id="keyword" placeholder="검색어 입력" value="${data.keyword}">
                         <button id="search_btn"><i class="fas fa-search"></i></button>
                     </div>
                     <button id="reset_btn">초기화</button>
@@ -31,6 +31,7 @@
                     <th>이름</th>
                     <th>코드</th>
                     <th>등록일</th>
+                    <th>수정일</th>
                     <th>조작</th>
                 </tr>
                 </thead>
@@ -46,6 +47,7 @@
                             <td>${c.cate_name}</td>
                             <td>${c.cate_code}</td>
                             <td>${c.cate_reg_dt}</td>
+                            <td>${c.cate_mod_dt}</td>
                             <td>
                                 <button class="modify_btn" data-seq="${c.cate_seq}"><i class="fas fa-pencil-alt"></i></button>
                                 <button class="delete_btn" data-seq="${c.cate_seq}"><i class="fas fa-minus-circle"></i></button>
@@ -59,7 +61,7 @@
             <button id="prev"><i class="fas fa-chevron-left"></i></button>
             <div class="pagers">
                 <c:forEach begin="1" end="${data.pageCnt}" var="i">
-                    <a href="/category?offset=${(i-1)*10}"${i}></a>
+                    <a href="/category?offset=${(i-1)*10}&keyword=${data.keyword}">${i}</a>
                 </c:forEach>
             </div>
             <button id="next"><i class="fas fa-chevron-right"></i></button>
@@ -82,6 +84,7 @@
             </div>
             <div class="btn_area">
                 <button id="add_cate">등록하기</button>
+                <button id="modify_cate">수정하기</button>
                 <button id="cancel_cate">취소하기</button>
             </div>
         </div>

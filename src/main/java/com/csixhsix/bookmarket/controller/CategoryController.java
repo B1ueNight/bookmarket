@@ -16,8 +16,8 @@ public class CategoryController {
     @Autowired CategoryService service;
 
     @GetMapping("/category")
-    public String getCategory(Model model, @RequestParam @Nullable Integer offset) {
-        Map<String, Object> resultMap = service.getCategoryList(offset);
+    public String getCategory(Model model, @RequestParam @Nullable Integer offset, @RequestParam @Nullable String keyword) {
+        Map<String, Object> resultMap = service.getCategoryList(offset, keyword);
         model.addAttribute("data", resultMap);
         return "/category/list";
     }
