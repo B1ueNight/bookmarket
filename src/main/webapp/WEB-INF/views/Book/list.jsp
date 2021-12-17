@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <%@include file="/WEB-INF/includes/header.jsp"%>
+    <link rel="stylesheet" href="/assets/css/category_list.css">
     <link rel="stylesheet" href="/assets/css/book_list.css">
     <script src="/assets/js/book.js"></script>
 </head>
@@ -81,7 +82,7 @@
         </div>
     </main>
     <div class="popup_wrap">
-        <div class="popup" id="book_add">
+        <div class="popup" id="category_add">
             <div class="top_area">
                 <div class="ico">
                     <i class="fas fa-book-open"></i>

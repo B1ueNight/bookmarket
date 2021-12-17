@@ -38,7 +38,7 @@
                 <tbody>
                     <c:if test="${data.total == 0}">
                         <tr>
-                            <td id="nodata" colspan="6">데이터가 없습니다.</td>
+                            <td id="nodata" colspan="5">데이터가 없습니다.</td>
                         </tr>
                     </c:if>
                     <c:forEach items="${data.list}" var="c">
