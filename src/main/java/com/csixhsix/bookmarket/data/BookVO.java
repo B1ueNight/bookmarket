@@ -17,7 +17,7 @@ public class BookVO {
     private String bi_cate;
     private Integer bi_status;
     private Integer bi_stock;
-    private Date bi_pub_dt;
+    private String bi_pub_dt;
     private String bi_writer;
     private Integer bi_point;
     private Date bi_reg_dt;

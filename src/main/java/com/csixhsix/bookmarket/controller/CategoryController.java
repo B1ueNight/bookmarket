@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class CategoryController {
     @Autowired CategoryService service;
-
     @GetMapping("/category")
     public String getCategory(Model model, @RequestParam @Nullable Integer offset, @RequestParam @Nullable String keyword) {
         Map<String, Object> resultMap = service.getCategoryList(offset, keyword);

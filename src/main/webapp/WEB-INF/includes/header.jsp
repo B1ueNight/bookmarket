@@ -26,9 +26,9 @@
             <div class="main_menu">
                 <a href="/"><i class="fas fa-columns"></i> 대시보드</a>
                 <a href="/category"><i class="fas fa-bookmark"></i>카테고리 관리</a>
-                <a href="/book">도서 관리</a>
+                <a href="/book"><i class="fas fa-book"></i>도서 관리</a>
                 <a href="#">유저 관리</a>
-                <a href="/company">출판사 관리</a>
+                <a href="/company"><i class="fas fa-building"></i>출판사 관리</a>
                 <a href="/writer">작가 관리</a>
             </div>
         </div>

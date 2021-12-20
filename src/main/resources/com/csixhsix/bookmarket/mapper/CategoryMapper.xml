@@ -30,4 +30,7 @@
         insert INTO bookstore_work_db.category_history(cath_type, cath_content, cath_cate_seq)
         VALUES(#{cath_type}, #{cath_content}, #{cath_cate_seq})
     </insert>
+    <select id="getCategoryByKeyword" resultType="com.csixhsix.bookmarket.data.CategoryVO">
+        select cate_seq, cate_name from category_info where cate_name like #{keyword}
+    </select>
 </mapper>

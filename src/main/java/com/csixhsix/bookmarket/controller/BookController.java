@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class BookController {
     @Autowired BookService service;
     @GetMapping("/book")
-    public String getBook(Model model, @RequestParam @Nullable Integer offset) {
-        Map<String, Object> resultMap = service.getBookList(offset);
+    public String getBook(Model model, @RequestParam @Nullable Integer offset, @RequestParam @Nullable String keyword, @RequestParam @Nullable String type) {
+        Map<String, Object> resultMap = service.getBookList(offset, keyword, type);
         model.addAttribute("data", resultMap);
         return "/book/list";
     }

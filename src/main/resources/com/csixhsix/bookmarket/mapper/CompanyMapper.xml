@@ -10,10 +10,46 @@
         select count(*) from company_info
     </select>
     <insert id="addCompany">
-        insert into company_info (ci_name, ci_address, ci_phone, ci_email, ci_book_title)
-        values(#{ci_name}, #{ci_address}, #{ci_phone}, #{ci_email}, #{ci_book_title})
+        insert into company_info (ci_name, ci_address, ci_phone, ci_email)
+        values(#{ci_name}, #{ci_address}, #{ci_phone}, #{ci_email})
     </insert>
     <delete id="deleteCompany">
         delete from company_info where ci_seq=#{seq}
     </delete>
+    <select id="getCompanyInfoBySeq" resultType="com.csixhsix.bookmarket.data.CompanyVO">
+        select * from company_info where ci_seq=#{seq}
+    </select>
+    <update id="updateCompany">
+        update company_info
+        set ci_name=#{ci_name}, ci_phone=#{ci_phone}, ci_email=#{ci_email}, ci_address=#{ci_address} where ci_seq=#{ci_seq}
+    </update>
+    <select id="selectLatestDataSeq" resultType="java.lang.Integer">
+        select ci_seq from company_info order by ci_seq desc limit 1
+    </select>
+    <insert id="insertCompanyHistory">
+        insert INTO bookstore_work_db.company_history(coph_type, coph_content, coph_cop_seq)
+        VALUES(#{coph_type}, #{coph_content}, #{coph_cop_seq})
+    </insert>
+    <select id="getCompanyByKeyword" resultType="com.csixhsix.bookmarket.data.CompanyVO">
+        select ci_seq, ci_name from company_info where ci_name like #{keyword}
+    </select>
+    <select id="getCompanyList" resultType="com.csixhsix.bookmarket.data.CompanyVO">
+        select ci_seq, ci_name, ci_phone, ci_address, ci_email, ci_reg_dt from company_info
+        <if test="type == 'adress'">
+            where ci_address like #{keyword}
+        </if>
+        <if test="type == 'name'">
+            where ci_name like #{keyword}
+        </if>
+        order by ci_seq desc limit 10 offset #{offset}
+    </select>
+    <select id="getCompanyCnt" resultType="java.lang.Integer">
+        select count(*) from (select a.*, b.ci_name, ci_address from company_info) c
+        <if test="type == 'dept'">
+            where department_name like #{keyword}
+        </if>
+        <if test="type == 'name'">
+            where ti_name like #{keyword}
+        </if>
+    </select>
 </mapper>

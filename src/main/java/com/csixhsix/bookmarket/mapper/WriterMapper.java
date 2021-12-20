@@ -12,5 +12,5 @@ public interface WriterMapper {
     public Integer getWriterCount();
     public void addWriter(WriterVO data);
     public void deleteWriter(Integer seq);
-    public void modifyWriter(WriterVO data);
+    public void updateWriter(WriterVO data);
 }

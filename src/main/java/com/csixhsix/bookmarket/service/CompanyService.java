@@ -4,6 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.csixhsix.bookmarket.data.CompanyHistoryVO;
 import com.csixhsix.bookmarket.data.CompanyVO;
 import com.csixhsix.bookmarket.mapper.CompanyMapper;
 
@@ -13,20 +14,31 @@ import org.springframework.stereotype.Service;
 @Service
 public class CompanyService {
     @Autowired CompanyMapper mapper;
-    public Map<String, Object> getCompanyList(Integer offset) {
-        if(offset == null) offset=0;
-
+    public Map<String, Object> getCompanyList(Integer offset, String keyword, String type) {
         Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
-        List<CompanyVO> list = mapper.getCompanyInfo(offset);
 
-        Integer cnt = mapper.getCompanyCount();
-        Integer page_cnt = cnt / 10;
-        if(cnt % 10 > 0) page_cnt++;
+        if(keyword == null) {
+            resultMap.put("keyword", keyword);
+            keyword = "%%";
+        }
+        else {
+            resultMap.put("keyword", keyword);
+            keyword = "%"+keyword+"%";
+        }
+
+        resultMap.put("type", type);
+
+        if(offset == null) offset = 0;
+        List<CompanyVO> list = mapper. getCompanyList(type, keyword, offset);
+        Integer cnt = mapper.getCompanyCnt(type, keyword);
+
+        Integer page = cnt / 10;
+        if(cnt % 10 > 0) page++;
 
         resultMap.put("status", true);
-        resultMap.put("total", cnt);
-        resultMap.put("pageCnt", page_cnt);
+        resultMap.put("pageCnt", page);
         resultMap.put("list", list);
+
         return resultMap;
     }
 
@@ -57,6 +69,15 @@ public class CompanyService {
         resultMap.put("status", true);
         resultMap.put("message", "출판사 정보가 추가되었습니다.");
         
+        Integer seq = mapper.selectLatestDataSeq();
+        CompanyHistoryVO history = new CompanyHistoryVO();
+        history.setCoph_cop_seq(seq);
+        history.setCoph_type("new");
+        String content = data.getCi_name()+"|"+data.getCi_phone()+"|"+data.getCi_email()+"|"+data.getCi_address();
+        history.setCoph_content(content);
+
+        mapper.insertCompanyHistory(history);
+        
         return resultMap;
     }
 
@@ -69,13 +90,31 @@ public class CompanyService {
     
     }
 
-    public Map<String, Object> modifyCompany(CompanyVO data){
+    public Map<String, Object> getCompanyInfoBySeq(Integer seq) {
         Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
-        mapper.modifyCompany(data);
+
         resultMap.put("status", true);
-        resultMap.put("message", "출판사 정보가 수정되었습니다.");
+        resultMap.put("data", mapper.getCompanyInfoBySeq(seq));
         return resultMap;
     }
 
-    
+    public Map<String, Object> updateCompany(CompanyVO data){
+        Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
+        
+        mapper.updateCompany(data);
+
+        resultMap.put("status", true);
+        resultMap.put("message", "수정되었습니다.");
+
+        CompanyHistoryVO history = new CompanyHistoryVO();
+        history.setCoph_cop_seq(data.getCi_seq());
+        history.setCoph_type("update");
+        String content = data.getCi_name()+"|"+data.getCi_phone()+"|"+data.getCi_email()+"|"+data.getCi_address();
+        history.setCoph_content(content);
+
+        mapper.insertCompanyHistory(history);
+
+        return resultMap;
+    }
+
 }

@@ -37,6 +37,7 @@
                     <th>도서상태</th>
                     <th>출판일</th>
                     <th>등록일</th>
+                    <th>수정일</th>
                     <th>재고</th>
                     <th>적립 포인트</th>
                     <th>조작</th>
@@ -45,7 +46,7 @@
                 <tbody>
                     <c:if test="${data.total == 0}">
                         <tr>
-                            <td id="nodata" colspan="6">데이터가 없습니다.</td>
+                            <td id="nodata" colspan="12">데이터가 없습니다.</td>
                         </tr>
                     </c:if>
                     <c:forEach items="${data.list}" var="b">
@@ -56,9 +57,23 @@
                             <td>${b.bi_writer}</td>
                             <td>${b.bi_cop}</td>
                             <td>${b.bi_cate}</td>
-                            <td>${b.bi_status}</td>
+                            <td class="book_status">
+                                <c:if test="${b.bi_status == 1}">
+                                    <span style="background-color: rgb(17, 226, 27)">입고</span>
+                                </c:if>
+                                <c:if test="${b.bi_status == 2}">
+                                    <span style="background-color: rgb(251, 186, 64)">입고예정</span>
+                                </c:if>
+                                <c:if test="${b.bi_status == 3}">
+                                    <span style="background-color: rgb(211, 115, 115)">절판</span>
+                                </c:if>
+                                <c:if test="${b.bi_status == 4}">
+                                    <span style="background-color: rgb(255, 23, 23)">리콜</span>
+                                </c:if>
+                            </td>
                             <td>${b.bi_pub_dt}</td>
                             <td>${b.bi_reg_dt}</td>
+                            <td>${b.bi_mod_dt}</td>
                             <td>${b.bi_stock}</td>
                             <td>${b.bi_point}</td>
                             <td>
@@ -91,24 +106,39 @@
                 <p>도서 정보를 입력해주세요</p>
             </div>
             <div class="content_area">
+                <input type="text" id="bi_cate_name" placeholder="카테고리" disabled>
+                <button id="search_cate">카테고리 선택</button>
                 <input type="text" id="bi_name" placeholder="도서명">
                 <input type="text" id="bi_sub" placeholder="소제목, 소개">
                 <input type="text" id="bi_writer" placeholder="저자,번역가">
-                <input type="text" id="bi_cop" placeholder="출판사">
-                <input type="text" id="bi_cate" placeholder="카테고리">
+                <input type="text" id="bi_company" placeholder="출판사">
+                <input type="text" id="bi_pub_dt" placeholder="출판일(.을 제외한 숫자 8자리)">
+                <input type="text" id="bi_stock" placeholder="재고">
+                <input type="text" id="bi_point" placeholder="적립 포인트">
                 <select id="bi_status">
                     <option value="1">입고</option>
                     <option value="2">입고 예정</option>
                     <option value="3">절판</option>
                     <option value="4">리콜</option>
                 </select>
-                <input type="text" id="bi_stock" placeholder="재고">
-                <input type="text" id="bi_point" placeholder="적립 포인트">
             </div>
             <div class="btn_area">
                 <button id="add_cate">등록하기</button>
                 <button id="cancel_cate">취소하기</button>
             </div>
+            <div class="category_search">
+                <div class="cate_search_box">
+                    <input type="text" id="cate_keyword" placeholder="예) 문학, 외국문학">
+                    <button id="cate_search_btn"><i class="fas fa-search"></i></button>
+                </div>
+                <div class="search_result">
+                    <ul>
+                        
+                    </ul>
+                </div>
+                <div class="cate_search_buttons">
+                    <button id="cate_search_close">닫기</button>
+                </div>
         </div>
     </div>
 </body>

@@ -7,6 +7,7 @@ import com.csixhsix.bookmarket.service.CompanyService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,8 +25,12 @@ public class CompanyAPIController {
     public Map<String, Object> deleteComapny(@RequestParam Integer seq){
         return service.deleteCompany(seq);
     }
-    @PatchMapping("/company/modify")
+    @GetMapping("/company/get")
+    public Map<String,Object> getCompanyInfoBySeq(@RequestParam Integer seq) {
+        return service.getCompanyInfoBySeq(seq);
+    }
+    @PatchMapping("/company/update")
     public Map<String, Object> patchCompany(@RequestBody CompanyVO data){
-        return service.modifyCompany(data);
+        return service.updateCompany(data);
     }
 }

@@ -71,7 +71,7 @@ public class WriterService {
 
     public Map<String, Object> modifyWriter(WriterVO data){
         Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
-        mapper.modifyWriter(data);
+        mapper.updateWriter(data);
         resultMap.put("status", true);
         resultMap.put("message", "작가 정보가 수정되었습니다.");
         return resultMap;

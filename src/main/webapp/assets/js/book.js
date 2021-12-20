@@ -1,33 +1,27 @@
 // teacher.js
 $(function() {
     $(".main_nemu a:nth-child(3)").addClass("active");
-    $("#search_dep").click(function(){
-        $(".department_search").css("display", "block");
+    $("#search_cate").click(function(){
+        $(".category_search").css("display", "block");
     })
-    $("del_search_close").click(function() {
-        $(".department_search").css("display", "");
+    $("cate_search_close").click(function() {
+        $(".category_search").css("display", "");
     });
-    $("#dep_keyword").keyup(function(e){
-        if(e.keyCode == 13) $("#dep_search_btn").trigger("click");
+    $("#cate_keyword").keyup(function(e){
+        if(e.keyCode == 13) $("#cate_search_btn").trigger("click");
     })
-    $("#dep_search_btn").click(function() {
+    $("#cate_search_btn").click(function() {
         $.ajax({
-            url:"/book/keyword?keyword="+$("#dep_keyword").val(),
+            url:"/category/keyword?keyword="+$("#cate_keyword").val(),
             type:"get",
             success:function(r) {
                 console.log(r);
                 $(".search_result ul").html("");
                 for(let i=0; i<r.list.length; i++){
-                    let str_status = "";
-                    if(r.list[i].bi_status == 1) str_status = "입고"
-                    if(r.list[i].bi_status == 2) str_status = "입고예정"
-                    if(r.list[i].bi_status == 3) str_status = "절판"
-                    if(r.list[i].bi_status == 4) str_status = "리콜"
 
                     let tag=
                     '<li>'+
-                        '<a href="#" data-dep-seq="'+r.list[i].bi_seq+'">'+r.list[i].bi_name+'</a>'+
-                        '<span class="status'+r.list[i].bi_status+'">'+str_status+'</span>'+
+                        '<a href="#" data-dep-seq="'+r.list[i].cate_seq+'">'+r.list[i].cate_name+'</a>'+
                     '</li>';
                     $(".search_result ul").append(tag);
                 }
@@ -37,34 +31,35 @@ $(function() {
                     let seq = $(this).attr("data-dep-seq");
                     let name = $(this).html();
 
-                    $("#book_cate_name").attr("data-dep-seq", seq);
-                    $("#book_cate_name").val(name);
+                    $("#bi_cate_name").attr("data-dep-seq", seq);
+                    $("#bi_cate_name").val(name);
 
                     $(".seacher_result ul").html("");
-                    $("#dep_keyword").val("");
-                    $(".department_search").css("display", "");
+                    $("#cate_keyword").val("");
+                    $(".category_search").css("display", "");
                 })
             }
         })
     })
 
-    $("#add_category").click(function(){
+    $("#add_cate").click(function(){
 
-        let book_cate_name = $("#book_cate_name").attr("data-dep-seq");
-        let book_name = $("#book_name").val();
-        let book_sub= $("#book_sub").val();
-        let book_writer = $("#book_writer").val();
-        let book_company = $("#book_company").val();
-        let book_category = $("#book_category").val();
-        let book_status = $("#book_status option:selected").val();
-        let book_stock = $("#book_stock").val();
-        let book_point = $("#book_point").val();
+        let book_cate_name = $("#bi_cate_name").attr("data-dep-seq");
+        let book_name = $("#bi_name").val();
+        let book_sub= $("#bi_sub").val();
+        let book_writer = $("#bi_writer").val();
+        let book_company = $("#bi_company").val();
+        let book_category = $("#bi_cate_name").val();
+        let book_status = $("#bi_status option:selected").val();
+        let book_stock = $("#bi_stock").val();
+        let book_publishing_time = $("#bi_publishing_time").val();
+        let book_point = $("#bi_point").val();
 
         if(book_cate_name == undefined){
             alert("카테고리를 입력해주세요");
             return;
         }
-        if(book_name== ''){
+        if(book_name == ''){
             alert("책 제목을 입력해주세요");
             return;
         }
@@ -72,18 +67,21 @@ $(function() {
         let data = {
             bi_ci_seq:book_cate_name,
             bi_name:book_name,
-            bi_sub:teacher_number,
+            bi_sub:book_sub,
             bi_writer:book_writer,
-            bi_company:book_company,
-            bi_category:book_category,
+            bi_cop:book_company,
+            bi_cate:book_category,
             bi_status:book_status,
             bi_stock:book_stock,
+            bi_pub_dt:book_publishing_time,
             bi_point:book_point
         }
 
+        console.log(data)
+
         $.ajax({
-            url:"/book/add",
             type:"post",
+            url:"/book/add",
             data:JSON.stringify(data),
             contentType:"application/json",
             success:function(e) {
@@ -94,25 +92,25 @@ $(function() {
             })
         })
             
-    $("#add_department").click(function(){
+    $("#add_category").click(function(){
         $(".popup_wrap").css("display", "block");
-        $("#modify_dep").css("display", "none");
-        $("#cancel_dep").css("display", "inline-block");
-        $(".popup .top_area h2").html("교직원 추가");
-        $(".popup .top_area p").html("교직원 정보를 입력하세요");
+        $("#modify_cate").css("display", "none");
+        $("#cancel_cate").css("display", "inline-block");
+        $(".popup .top_area h2").html("도서 추가");
+        $(".popup .top_area p").html("도서 정보를 입력하세요");
     })
-    $("#cancel_dep").click(function(){
+    $("#cancel_cate").click(function(){
         if(confirm("취소하시겠습니까?\n(입력한 내용은 저장되지 않습니다.)") == false) return;
 
-        $("teacher_dep_name").attr("data-dep-seq", "");
-        $("#teacher_dep_name").val("");
-        $("#teacher_name").val("");
-        $("#teacher_number").val("");
-        $("#teacher_pwd").val("");
-        $("#teacher_pwd_confirm").val("");
-        $("#teacher_birth").val("");
-        $("#teacher_phone").val("");
-        $("#teacher_email").val("");
+        $("book_cate_name").attr("data-dep-seq", "");
+        $("#bi_name").val("");
+        $("#bi_sub").val("");
+        $("#bi_writer").val("");
+        $("#bi_company").val("");
+        $("#bi_status").val("");
+        $("#bi_stock").val("");
+        $("#bi_pub_dt").val("");
+        $("#bi_point").val("");
         
         $(".popup_wrap").css("display", "")
     })
@@ -122,6 +120,6 @@ $(function() {
         let type = $("#search_type option:selected").val();
         let keyword = $("#keyword").val();
 
-        location.href = "/teacher?type="+type+"&keyword="+keyword;
+        location.href = "/book?type="+type+"&keyword="+keyword;
     })
 })

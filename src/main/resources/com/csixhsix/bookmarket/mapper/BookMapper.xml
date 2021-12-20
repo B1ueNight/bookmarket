@@ -3,15 +3,31 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.csixhsix.bookmarket.mapper.BookMapper">
 
-    <select id="getBookInfo" resultType="com.csixhsix.bookmarket.data.BookVO">
-        select * from book_info order by bi_seq desc limit 10 offset #{offset}
+    <select id="getBookList" resultType="com.csixhsix.bookmarket.data.BookVO">
+        select bi_seq, category_name, bi_name, bi_sub, bi_writer, bi_cop, bi_status, bi_stock, bi_point, bi_reg_dt, bi_mod_dt from 
+        (select a.*, b.cate_name as category_name from book_info a left outer join category_info b
+        on a.bi_ci_seq = b.cate_seq ) c
+        <if test="type == 'cate'">
+            where category_name like #{keyword}
+        </if>
+        <if test="type == 'name'">
+            where bi_name like #{keyword}
+        </if>
+        order by bi_seq desc limit 10 offset #{offset}
     </select>
     <select id="getBookCount" resultType="java.lang.Integer">
-        select count(*) from book_info
+        select count(*) from (select a.*, b.cate_name as categoty_name from book_info a left outer join category_info b
+        on a.bi_ci_seq = b.cate_seq ) c
+        <if test="type == 'cate'">
+            where category_name like #{keyword}
+        </if>
+        <if test="type == 'name'">
+            where bi_name like #{keyword}
+        </if>
     </select>
     <insert id="addBook">
-        insert into book_info (bi_name, bi_sub, bi_cop, bi_cate, bi_status, bi_stock, bi_pub_dt, bi_writer, bi_point)
-        values(#{bi_name}, #{bi_sub}, #{bi_cop}, #{bi_cate}, #{bi_status}, #{bi_stock}, #{bi_pub_dt}, #{bi_writer}, #{bi_point})
+        insert into book_info (bi_name, bi_sub, bi_cop, bi_cate, bi_status, bi_stock, bi_pub_dt, bi_writer, bi_point, bi_ci_seq)
+        values(#{bi_name}, #{bi_sub}, #{bi_cop}, #{bi_cate}, #{bi_status}, #{bi_stock}, #{bi_pub_dt}, #{bi_writer}, #{bi_point}, #{bi_ci_seq})
     </insert>
     <delete id="deleteBook">
         delete from book_info where bi_seq=#{seq}

@@ -13,63 +13,47 @@ import org.springframework.stereotype.Service;
 @Service
 public class BookService {
     @Autowired BookMapper mapper;
-    public Map<String, Object> getBookList(Integer offset) {
-        if(offset == null) offset=0;
-
+    public Map<String, Object> getBookList(Integer offset, String keyword, String type) {
         Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
-        List<BookVO> list = mapper.getBookInfo(offset);
+        System.out.println("####################### getBookList");
+        if(keyword == null) {
+            resultMap.put("keyword", keyword);
+            keyword = "%%";
+        }
+        else {
+            resultMap.put("keyword", keyword);
+            keyword = "%"+keyword+"%";
+        }
 
-        Integer cnt = mapper.getBookCount();
-        Integer page_cnt = cnt / 10;
-        if(cnt % 10 > 0) page_cnt++;
+        resultMap.put("type", type);
+
+        if(offset == null) offset = 0;
+        List<BookVO> list = mapper. getBookList(offset, keyword, type);
+        Integer cnt = mapper.getBookCount(type, keyword);
+
+        Integer page = cnt / 10;
+        if(cnt % 10 > 0) page++;
 
         resultMap.put("status", true);
-        resultMap.put("total", cnt);
-        resultMap.put("pageCnt", page_cnt);
+        resultMap.put("pageCnt", page);
         resultMap.put("list", list);
+
         return resultMap;
     }
 
-    public Map<String, Object> addBook(BookVO data) {
+    public Map<String, Object> addBook(BookVO data) throws Exception {
         Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
-        if(data.getBi_name() == null || data.getBi_name().equals("")) {
+
+        if(data.getBi_cop() == null || data.getBi_cop().equals("")) {
             resultMap.put("status", false);
-            resultMap.put("message", "도서명을 입력하세요");
-            return resultMap;
-        }
-        if(data.getBi_cate()== null || data.getBi_cate().equals("")) {
-            resultMap.put("status", false);
-            resultMap.put("message", "카테고리를 입력하세요");
-            return resultMap;
-        }
-        if(data.getBi_cop()== null || data.getBi_cop().equals("")) {
-            resultMap.put("status", false);
+            resultMap.put("reason", "company");
             resultMap.put("message", "출판사를 입력하세요");
             return resultMap;
         }
-        if(data.getBi_writer()== null || data.getBi_writer().equals("")) {
+        if(data.getBi_writer() == null || data.getBi_writer().equals("")) {
             resultMap.put("status", false);
+            resultMap.put("reason", "writer");
             resultMap.put("message", "저자를 입력하세요(외의 경우 미상으로 등록)");
-            return resultMap;
-        }
-        if(data.getBi_status() == null || data.getBi_status() == 0) {
-            resultMap.put("status", false);
-            resultMap.put("message", "도서 상태를 입력하세요");
-            return resultMap;
-        }
-        if(data.getBi_pub_dt() == null) {
-            resultMap.put("status", false);
-            resultMap.put("message", "도서 출판일을 입력하세요");
-            return resultMap;
-        }
-        if(data.getBi_stock() == null) {
-            resultMap.put("status", false);
-            resultMap.put("message", "도서 재고를 입력하세요");
-            return resultMap;
-        }
-        if(data.getBi_point() == null) {
-            resultMap.put("status", false);
-            resultMap.put("message", "적립포인트를 입력하세요");
             return resultMap;
         }
         

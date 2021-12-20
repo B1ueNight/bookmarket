@@ -54,7 +54,7 @@ main > h1 {font-size: 36px; padding-bottom: 30px; margin-bottom: 30px; border-bo
     margin-left: -250px; margin-top: -250px; padding: 45px 0; width: 500px;
 }
 .popup .top_area {text-align: center; padding-bottom: 40px; border-bottom: 1px solid #ccc;}
-.popup .ico{width: 80px; height: 80px; text-align: center; background-color: rgb(142, 255, 128); color: #fff; font-size: 36px; line-height: 70px;
+.popup .ico{width: 80px; height: 80px; text-align: center; background-color: rgb(128, 187, 255); color: #fff; font-size: 36px; line-height: 70px;
             border-radius: 999px; display: inline-block; margin-top: 7px;}
 .popup .top_area h2 {margin-top: 12px; font-size: 24px; margin-bottom: 7px;}
 .popup .pager_area p {margin-top: 10px; color: #555;}

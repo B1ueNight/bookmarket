@@ -6,6 +6,7 @@ import com.csixhsix.bookmarket.data.CategoryVO;
 import com.csixhsix.bookmarket.service.CategoryService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -33,6 +34,8 @@ public class CategoryAPIController {
     public Map<String,Object> patchCategoryInfo(@RequestBody CategoryVO data) {
         return service.updateCategory(data);
     }
-
-    
+    @GetMapping("/category/keyword")
+    public Map<String, Object> getCategoryByKeyword(@RequestParam @Nullable String keyword) {
+        return service.getCategoryByKeyword(keyword);
+    }
 }

@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <%@include file="/WEB-INF/includes/header.jsp"%>
+    <link rel="stylesheet" href="/assets/css/category_list.css">
     <link rel="stylesheet" href="/assets/css/company_list.css">
     <script src="/assets/js/company.js"></script>
 </head>
@@ -18,7 +19,13 @@
         <div class="content_area">
                 <div class="menu_area">
                     <div class="search_box">
-                        <input type="text" id="keyword" placeholder="검색어 입력">
+                        <select id="search_type">
+                            <option value="address">주소</option>
+                            <option value="name"
+                                <c:if test="${data.type=='name'}">selected</c:if>
+                            >이름</option>
+                        </select>
+                        <input type="text" id="keyword" placeholder="검색어 입력" value="${data.keyword}">
                         <button id="search_btn"><i class="fas fa-search"></i></button>
                     </div>
                     <button id="reset_btn">초기화</button>
@@ -62,7 +69,7 @@
             <button id="prev"><i class="fas fa-chevron-left"></i></button>
             <div class="pagers">
                 <c:forEach begin="1" end="${data.pageCnt}" var="i">
-                    <a href="/company?offset=${(i-1)*10}"${i}></a>
+                    <a href="/company?offset=${(i-1)*10}&type=${type}&keyword=${keyword}">${i}</a>
                 </c:forEach>
             </div>
             <button id="next"><i class="fas fa-chevron-right"></i></button>
@@ -73,7 +80,7 @@
         <div class="popup" id="company_add">
             <div class="top_area">
                 <div class="ico">
-                    <i class="fas fa-book-open"></i>
+                    <i class="fas fa-building"></i>
                 </div>
                 <h2>출판사 추가</h2>
                 <p>출판사 정보를 입력해주세요</p>
@@ -86,6 +93,7 @@
             </div>
             <div class="btn_area">
                 <button id="add_cate">등록하기</button>
+                <button id="modify_cate">수정하기</button>
                 <button id="cancel_cate">취소하기</button>
             </div>
         </div>

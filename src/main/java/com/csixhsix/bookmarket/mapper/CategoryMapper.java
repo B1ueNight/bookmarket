@@ -18,4 +18,6 @@ public interface CategoryMapper {
 
     public Integer selectLatestDataSeq();
     public void insertCategoryHistory(CategoryHistoryVO data);
+
+    public List<CategoryVO> getCategoryByKeyword(String keyword);
 }
