@@ -6,6 +6,7 @@ import com.csixhsix.bookmarket.data.CompanyVO;
 import com.csixhsix.bookmarket.service.CompanyService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -32,5 +33,9 @@ public class CompanyAPIController {
     @PatchMapping("/company/update")
     public Map<String, Object> patchCompany(@RequestBody CompanyVO data){
         return service.updateCompany(data);
+    }
+    @GetMapping("/company/keyword")
+    public Map<String, Object> getCompanyByKeyword(@RequestParam @Nullable String keyword) {
+        return service.getCompanyByKeyword(keyword);
     }
 }

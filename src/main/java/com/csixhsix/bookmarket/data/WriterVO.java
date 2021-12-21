@@ -11,7 +11,8 @@ public class WriterVO {
     private String wi_name;
     private String wi_birth;
     private String wi_email;
-    private Integer wi_book_title;
+    private String wi_company;
     private Date wi_reg_dt;
+    private Date wi_mod_dt;
     
 }

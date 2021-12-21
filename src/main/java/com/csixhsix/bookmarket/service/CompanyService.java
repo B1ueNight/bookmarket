@@ -14,33 +14,30 @@ import org.springframework.stereotype.Service;
 @Service
 public class CompanyService {
     @Autowired CompanyMapper mapper;
-    public Map<String, Object> getCompanyList(Integer offset, String keyword, String type) {
-        Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
-
-        if(keyword == null) {
-            resultMap.put("keyword", keyword);
-            keyword = "%%";
+        public Map<String, Object> getCompanyList(Integer offset, String keyword) {
+            Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
+            if(offset == null) {
+                offset=0;
+                resultMap.put("offset", offset);}
+            if(keyword == null) {
+                keyword="%%";
+                resultMap.put("offset", offset);}
+            else {
+                resultMap.put("keyword", keyword);
+                keyword = "%"+keyword+"%";}
+                
+            List<CompanyVO> list = mapper.getCompanyInfo(offset, keyword);
+    
+            Integer cnt = mapper.getCompanyCount(keyword);
+            Integer page_cnt = cnt / 10;
+            if(cnt % 10 > 0) page_cnt++;
+    
+            resultMap.put("status", true);
+            resultMap.put("total", cnt);
+            resultMap.put("pageCnt", page_cnt);
+            resultMap.put("list", list);
+            return resultMap;
         }
-        else {
-            resultMap.put("keyword", keyword);
-            keyword = "%"+keyword+"%";
-        }
-
-        resultMap.put("type", type);
-
-        if(offset == null) offset = 0;
-        List<CompanyVO> list = mapper. getCompanyList(type, keyword, offset);
-        Integer cnt = mapper.getCompanyCnt(type, keyword);
-
-        Integer page = cnt / 10;
-        if(cnt % 10 > 0) page++;
-
-        resultMap.put("status", true);
-        resultMap.put("pageCnt", page);
-        resultMap.put("list", list);
-
-        return resultMap;
-    }
 
     public Map<String, Object> addCompany(CompanyVO data) {
         Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
@@ -114,6 +111,16 @@ public class CompanyService {
 
         mapper.insertCompanyHistory(history);
 
+        return resultMap;
+    }
+
+    public Map<String, Object> getCompanyByKeyword(String keyword) {
+        Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
+        if(keyword == null) keyword = "%%";
+        keyword = "%"+keyword+"%";
+        List<CompanyVO> list = mapper. getCompanyByKeyword(keyword);
+        resultMap.put("status", true);
+        resultMap.put("list", list);
         return resultMap;
     }
 

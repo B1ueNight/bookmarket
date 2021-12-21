@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <%@include file="/WEB-INF/includes/header.jsp"%>
+    <link rel="stylesheet" href="/assets/css/category_list.css">
     <link rel="stylesheet" href="/assets/css/writer_list.css">
     <script src="/assets/js/writer.js"></script>
 </head>
@@ -18,10 +19,14 @@
         <div class="content_area">
                 <div class="menu_area">
                     <div class="search_box">
-                        <input type="text" id="keyword" placeholder="검색어 입력">
+                        <select id="search_type">
+                            <option value="company">출판사</option>
+                            <option value="name"
+                                <c:if test="${data.type=='name'}">selected</c:if>
+                            >이름</option>
+                        </select>
+                        <input type="text" id="keyword" placeholder="검색어 입력" value="${data.keyword}">
                         <button id="search_btn"><i class="fas fa-search"></i></button>
-                    </div>
-                    <button id="reset_btn">초기화</button>
                 </div>
         <div class="table_area">
             <table>
@@ -31,7 +36,9 @@
                     <th>작가명</th>
                     <th>생년월일</th>
                     <th>이메일</th>
-                    <th>출판권수</th>
+                    <th>소속 출판사</th>
+                    <th>등록일</th>
+                    <th>수정일</th>
                     <th>조작</th>
                 </tr>
                 </thead>
@@ -47,8 +54,9 @@
                             <td>${w.wi_name}</td>
                             <td>${w.wi_birth}</td>
                             <td>${w.wi_email}</td>
-                            <td>${w.wi_book_title}</td>
+                            <td>${w.wi_company}</td>
                             <td>${w.wi_reg_dt}</td>
+                            <td>${w.wi_mod_dt}</td>
                             <td>
                                 <button class="modify_btn" data-seq="${w.wi_seq}"><i class="fas fa-pencil-alt"></i></button>
                                 <button class="delete_btn" data-seq="${w.wi_seq}"><i class="fas fa-minus-circle"></i></button>
@@ -79,16 +87,32 @@
                 <p>작가 정보를 입력해주세요</p>
             </div>
             <div class="content_area">
-                <input type="text" id="wi_name" placeholder="출판사명">
-                <input type="text" id="wi_birth" placeholder="연락처">
+                <input type="text" id="wi_name" placeholder="작가명">
+                <input type="text" id="wi_birth" placeholder="생년월일(8자리)">
                 <input type="text" id="wi_email" placeholder="이메일">
-                <input type="number" id="wi_book_title" placeholder="출판권수">
+                <br>
+                <input type="text" id="wi_company" placeholder="소속 출판사">
+                <button id="search_company">출판사 검색</button>
+                <br>
             </div>
             <div class="btn_area">
                 <button id="add_cate">등록하기</button>
                 <button id="cancel_cate">취소하기</button>
             </div>
         </div>
+        <div class="company_search">
+            <div class="company_search_box">
+                <input type="text" id="company_keyword" placeholder="출판사 이름">
+                <button id="company_search_btn"><i class="fas fa-search"></i></button>
+            </div>
+            <div class="search_result">
+                <ul>
+                    
+                </ul>
+            </div>
+            <div class="company_search_buttons">
+                <button id="company_search_close">닫기</button>
+            </div>
     </div>
 </body>
 </html>

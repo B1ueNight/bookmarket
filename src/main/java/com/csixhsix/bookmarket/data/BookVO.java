@@ -13,7 +13,7 @@ public class BookVO {
     private Integer bi_wi_seq;
     private String bi_name;
     private String bi_sub;
-    private String bi_cop;
+    private String bi_company;
     private String bi_cate;
     private Integer bi_status;
     private Integer bi_stock;

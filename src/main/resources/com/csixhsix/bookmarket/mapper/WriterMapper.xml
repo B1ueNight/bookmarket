@@ -10,8 +10,8 @@
         select count(*) from writer_info
     </select>
     <insert id="addWriter">
-        insert into writer_info (wi_name, wi_birth, wi_email, wi_book_title)
-        values(#{wi_name}, #{wi_birth}, #{wi_email}, #{wi_book_title})
+        insert into writer_info (wi_name, wi_birth, wi_email, wi_company)
+        values(#{wi_name}, #{wi_birth}, #{wi_email}, #{wi_company})
     </insert>
     <delete id="deleteWriter">
         delete from writer_info where wi_seq=#{seq}

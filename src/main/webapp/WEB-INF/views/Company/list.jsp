@@ -19,16 +19,8 @@
         <div class="content_area">
                 <div class="menu_area">
                     <div class="search_box">
-                        <select id="search_type">
-                            <option value="address">주소</option>
-                            <option value="name"
-                                <c:if test="${data.type=='name'}">selected</c:if>
-                            >이름</option>
-                        </select>
-                        <input type="text" id="keyword" placeholder="검색어 입력" value="${data.keyword}">
+                        <input type="text" id="keyword" placeholder="검색어 입력">
                         <button id="search_btn"><i class="fas fa-search"></i></button>
-                    </div>
-                    <button id="reset_btn">초기화</button>
                 </div>
         <div class="table_area">
             <table>
@@ -36,6 +28,7 @@
                     <tr>
                     <th>번호</th>
                     <th>출판사명</th>
+                    <th>출판사 형태</th>
                     <th>연락처</th>
                     <th>이메일</th>
                     <th>주소</th>
@@ -52,6 +45,20 @@
                         <tr>
                             <td>${co.ci_seq}</td>
                             <td>${co.ci_name}</td>
+                            <td class="company_status">
+                                <c:if test="${co.ci_status == 1}">
+                                    <span style="background-color: rgb(17, 226, 27)">대형 출판사</span>
+                                </c:if>
+                                <c:if test="${co.ci_status == 2}">
+                                    <span style="background-color: rgb(251, 186, 64)">소형 출판사</span>
+                                </c:if>
+                                <c:if test="${co.ci_status == 3}">
+                                    <span style="background-color: rgb(255, 110, 26)">독립 출판사</span>
+                                </c:if>
+                                <c:if test="${co.ci_status == 4}">
+                                    <span style="background-color: rgb(255, 23, 23)">1인 출판사</span>
+                                </c:if>
+                            </td>
                             <td>${co.ci_phone}</td>
                             <td>${co.ci_email}</td>
                             <td>${co.ci_address}</td>
@@ -87,6 +94,12 @@
             </div>
             <div class="content_area">
                 <input type="text" id="ci_name" placeholder="출판사명">
+                <select id="ci_status">
+                    <option value="1">대형 출판사</option>
+                    <option value="2">소형 출판사</option>
+                    <option value="3">독립 출판사</option>
+                    <option value="4">1인 출판사</option>
+                </select>
                 <input type="text" id="ci_phone" placeholder="연락처">
                 <input type="text" id="ci_email" placeholder="이메일">
                 <input type="text" id="ci_address" placeholder="주소">

@@ -2,7 +2,6 @@
 main {background-color: #f7f7f7; position: relative;}
 main > h1 {font-size: 36px; padding-bottom: 30px; margin-bottom: 30px; border-bottom: 1px solid #ddd;}
 
-#search_type { border: 0; padding-right: 5px; margin-right: 5px; outline: none;}
 .popup_wrap {
     position: fixed; width: 100vw; height: 100vh; left: 0; top: 0; background-color: rgba(0,0,0,0.3);
     display: none;}
@@ -16,7 +15,8 @@ main > h1 {font-size: 36px; padding-bottom: 30px; margin-bottom: 30px; border-bo
 .popup .pager_area p {margin-top: 10px; color: #555;}
 
 .popup .content_area {padding: 40px 0; width: 350px; margin: 0 auto; font-size: 0;}
-#ci_name, #ci_phone, #ci_email, #ci_address { width: 100%; padding: 0; margin: 0; border: 1px solid #ccc; font-size: 16px; 
-        font-weight: 400; padding: 10px 20px; box-sizing: border-box; border-radius: 15px; margin-bottom: 15px; outline: none;}
-.cop_search_buttons { text-align: center; padding: 10px; border-top: 1px solid #ddd; background-color: #f3f3f3;}
-#cop_search_close {border: 0; background-color: #666; color: #fff; border-radius: 3px; width: 80px; height:30px; cursor: pointer;}
+#ci_name, #ci_status,  #ci_phone, #ci_email, #ci_address { width: 100%; padding: 0; margin: 0; border: 1px solid #ccc; font-size: 16px; 
+    font-weight: 400; padding: 10px 20px; box-sizing: border-box; border-radius: 15px; margin-bottom: 15px; outline: none;}
+.company_status span {
+    display: inline-block; padding: 5px 10px; color: #fff; font-size: 12px; border-radius: 3px;
+}

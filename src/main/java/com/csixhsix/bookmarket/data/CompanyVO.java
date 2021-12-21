@@ -9,6 +9,7 @@ public class CompanyVO {
     private Integer ci_seq;
     private Integer ci_wi_seq;
     private String ci_name;
+    private Integer ci_status;
     private String ci_address;
     private String ci_phone;
     private String ci_email;

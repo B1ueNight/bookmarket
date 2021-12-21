@@ -15,9 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class CompanyController {
     @Autowired CompanyService service;
     @GetMapping("/company")
-    public String getBook(Model model, @RequestParam @Nullable Integer offset, @RequestParam @Nullable String keyword,
-    @RequestParam @Nullable String type) {
-        Map<String, Object> resultMap = service.getCompanyList(offset, keyword, type);
+    public String getBook(Model model, @RequestParam @Nullable Integer offset, @RequestParam @Nullable String keyword) {
+        Map<String, Object> resultMap = service.getCompanyList(offset, keyword);
         model.addAttribute("data", resultMap);
         return "/company/list";
     }

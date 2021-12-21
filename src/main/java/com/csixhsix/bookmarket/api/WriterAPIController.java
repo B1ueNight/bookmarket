@@ -24,8 +24,8 @@ public class WriterAPIController {
     public Map<String, Object> deleteWriter(@RequestParam Integer seq){
         return service.deleteWriter(seq);
     }
-    @PatchMapping("/wirter/modify")
+    @PatchMapping("/wirter/update")
     public Map<String, Object> patchWriter(@RequestBody WriterVO data){
-        return service.modifyWriter(data);
+        return service.updateWriter(data);
     }
 }

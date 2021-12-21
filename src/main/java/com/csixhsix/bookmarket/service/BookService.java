@@ -15,51 +15,49 @@ public class BookService {
     @Autowired BookMapper mapper;
     public Map<String, Object> getBookList(Integer offset, String keyword, String type) {
         Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
-        System.out.println("####################### getBookList");
+        if(offset == null) {
+            offset=0;
+            resultMap.put("offset", offset);}
         if(keyword == null) {
-            resultMap.put("keyword", keyword);
-            keyword = "%%";
-        }
+            keyword="%%";
+            resultMap.put("offset", offset);}
         else {
             resultMap.put("keyword", keyword);
-            keyword = "%"+keyword+"%";
-        }
+            keyword = "%"+keyword+"%";}
+            
+        List<BookVO> list = mapper.getBookInfo(offset, keyword);
 
-        resultMap.put("type", type);
-
-        if(offset == null) offset = 0;
-        List<BookVO> list = mapper. getBookList(offset, keyword, type);
-        Integer cnt = mapper.getBookCount(type, keyword);
-
-        Integer page = cnt / 10;
-        if(cnt % 10 > 0) page++;
+        Integer cnt = mapper.getBookCount(keyword);
+        Integer page_cnt = cnt / 10;
+        if(cnt % 10 > 0) page_cnt++;
 
         resultMap.put("status", true);
-        resultMap.put("pageCnt", page);
+        resultMap.put("total", cnt);
+        resultMap.put("pageCnt", page_cnt);
         resultMap.put("list", list);
-
         return resultMap;
     }
 
-    public Map<String, Object> addBook(BookVO data) throws Exception {
+    public Map<String, Object> addBook(BookVO data) {
         Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
-
-        if(data.getBi_cop() == null || data.getBi_cop().equals("")) {
+        if(data.getBi_name() == null || data.getBi_name().equals("")) {
             resultMap.put("status", false);
-            resultMap.put("reason", "company");
-            resultMap.put("message", "출판사를 입력하세요");
-            return resultMap;
-        }
-        if(data.getBi_writer() == null || data.getBi_writer().equals("")) {
-            resultMap.put("status", false);
-            resultMap.put("reason", "writer");
-            resultMap.put("message", "저자를 입력하세요(외의 경우 미상으로 등록)");
+            resultMap.put("message", "도서명을 입력하세요");
             return resultMap;
         }
         
         mapper.addBook(data);
         resultMap.put("status", true);
-        resultMap.put("message", "도서가 추가되었습니다.");
+        resultMap.put("message", "카테고리가 추가되었습니다.");
+
+        // Integer seq = mapper.selectLatestDataSeq();
+        // CategoryHistoryVO history = new CategoryHistoryVO();
+        // history.setCath_cate_seq(seq);
+        // history.setCath_type("new");
+        // String content = data.getCate_name()+"|"+data.getCate_code();
+        // history.setCath_content(content);
+
+        // mapper.insertCategoryHistory(history);
         
         return resultMap;
     }
@@ -68,9 +66,16 @@ public class BookService {
         Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
         mapper.deleteBook(seq);
         resultMap.put("status", true);
-        resultMap.put("message", "도서가 삭제되었습니다.");
-        return resultMap;
+        resultMap.put("message", "카테고리가 삭제되었습니다.");
+        
+        // CategoryHistoryVO history = new CategoryHistoryVO();
+        // history.setCath_cate_seq(seq);
+        // history.setCath_type("delete");
 
+        // mapper.insertCategoryHistory(history);
+
+        return resultMap;
+    
     }
     public Map<String, Object> getBookInfoBySeq(Integer seq) {
         Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
@@ -79,13 +84,32 @@ public class BookService {
         resultMap.put("data", mapper.getBookInfoBySeq(seq));
         return resultMap;
     }
-    public Map<String, Object> updateBook(BookVO data){
+    public Map<String, Object> modifyBook(BookVO data){
         Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
         
-        mapper.updateBook(data);
+        mapper.modifyBook(data);
 
         resultMap.put("status", true);
         resultMap.put("message", "수정되었습니다.");
+
+        // CategoryHistoryVO history = new CategoryHistoryVO();
+        // history.setCath_cate_seq(data.getCate_seq());
+        // history.setCath_type("update");
+        // String content = data.getCate_name()+"|"+data.getCate_code();
+        // history.setCath_content(content);
+
+        // mapper.insertCategoryHistory(history);
+
+        return resultMap;
+    }
+
+    public Map<String, Object> getBookByKeyword(String keyword) {
+        Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
+        if(keyword == null) keyword = "%%";
+        keyword = "%"+keyword+"%";
+        List<BookVO> list = mapper. getBookByKeyword(keyword);
+        resultMap.put("status", true);
+        resultMap.put("list", list);
         return resultMap;
     }
 }

@@ -47,9 +47,9 @@ public class WriterService {
             resultMap.put("message", "생년월일(8자리)을 입력하세요");
             return resultMap;
         }
-        if(data.getWi_book_title()== null || data.getWi_book_title()== 0) {
+        if(data.getWi_company()== null || data.getWi_company().equals("")) {
             resultMap.put("status", false);
-            resultMap.put("message", "출판 권수를 입력하세요(최소 1권 이상)");
+            resultMap.put("message", "소속 출판사를 입력하세요(없으면 '없음' 선택");
             return resultMap;
         }
         
@@ -69,7 +69,7 @@ public class WriterService {
     
     }
 
-    public Map<String, Object> modifyWriter(WriterVO data){
+    public Map<String, Object> updateWriter(WriterVO data){
         Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
         mapper.updateWriter(data);
         resultMap.put("status", true);

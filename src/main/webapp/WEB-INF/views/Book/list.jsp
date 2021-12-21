@@ -55,7 +55,7 @@
                             <td>${b.bi_name}</td>
                             <td>${b.bi_sub}</td>
                             <td>${b.bi_writer}</td>
-                            <td>${b.bi_cop}</td>
+                            <td>${b.bi_company}</td>
                             <td>${b.bi_cate}</td>
                             <td class="book_status">
                                 <c:if test="${b.bi_status == 1}">
