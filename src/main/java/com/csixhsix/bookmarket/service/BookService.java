@@ -4,8 +4,10 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.csixhsix.bookmarket.data.BookHistoryVO;
 import com.csixhsix.bookmarket.data.BookVO;
 import com.csixhsix.bookmarket.mapper.BookMapper;
+import com.csixhsix.bookmarket.utils.AESAlgorithm;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,7 +40,7 @@ public class BookService {
         return resultMap;
     }
 
-    public Map<String, Object> addBook(BookVO data) {
+    public Map<String, Object> addBook(BookVO data) throws Exception {
         Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
         if(data.getBi_name() == null || data.getBi_name().equals("")) {
             resultMap.put("status", false);
@@ -48,19 +50,29 @@ public class BookService {
         
         mapper.addBook(data);
         resultMap.put("status", true);
-        resultMap.put("message", "카테고리가 추가되었습니다.");
-
-        // Integer seq = mapper.selectLatestDataSeq();
-        // CategoryHistoryVO history = new CategoryHistoryVO();
-        // history.setCath_cate_seq(seq);
-        // history.setCath_type("new");
-        // String content = data.getCate_name()+"|"+data.getCate_code();
-        // history.setCath_content(content);
-
-        // mapper.insertCategoryHistory(history);
+        resultMap.put("message", "도서가 추가되었습니다.");
         
+        String code = data.getBi_code();
+            String encrypted = AESAlgorithm.Encrypt(code);
+            data.setBi_code(encrypted);
+    
+            mapper.addBook(data);
+            
+        Integer seq = mapper.selectLatestDataSeq();
+        BookHistoryVO history = new BookHistoryVO();
+        history.setBkh_book_seq(seq);
+        history.setBkh_type("new");
+        String content = data.getBi_name()+"|"+data.getBi_code()+"|"+data.getBi_company()+"|"+data.getBi_status()+"|"+data.getBi_stock()+"|"+data.getBi_pub_dt()+"|"+data.getBi_point();
+        history.setBkh_content(content);
+
+        mapper.insertBookHistory(history);
+        
+
         return resultMap;
     }
+
+
+
 
     public Map<String, Object> deleteBook(Integer seq) {
         Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
@@ -68,11 +80,11 @@ public class BookService {
         resultMap.put("status", true);
         resultMap.put("message", "카테고리가 삭제되었습니다.");
         
-        // CategoryHistoryVO history = new CategoryHistoryVO();
-        // history.setCath_cate_seq(seq);
-        // history.setCath_type("delete");
+        BookHistoryVO history = new BookHistoryVO();
+        history.setBkh_book_seq(seq);
+        history.setBkh_type("delete");
 
-        // mapper.insertCategoryHistory(history);
+        mapper.insertBookHistory(history);
 
         return resultMap;
     
@@ -92,13 +104,13 @@ public class BookService {
         resultMap.put("status", true);
         resultMap.put("message", "수정되었습니다.");
 
-        // CategoryHistoryVO history = new CategoryHistoryVO();
-        // history.setCath_cate_seq(data.getCate_seq());
-        // history.setCath_type("update");
-        // String content = data.getCate_name()+"|"+data.getCate_code();
-        // history.setCath_content(content);
+        BookHistoryVO history = new BookHistoryVO();
+        history.setBkh_book_seq(data.getBi_seq());
+        history.setBkh_type("update");
+        String content = data.getBi_name()+"|"+data.getBi_code()+"|"+data.getBi_company()+"|"+data.getBi_status()+"|"+data.getBi_stock()+"|"+data.getBi_pub_dt()+"|"+data.getBi_point();
+        history.setBkh_content(content);
 
-        // mapper.insertCategoryHistory(history);
+        mapper.insertBookHistory(history);
 
         return resultMap;
     }

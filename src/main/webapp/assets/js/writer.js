@@ -18,10 +18,10 @@ $(function() {
                 $(".search_result ul").html("");
                 for(let i=0; i<r.list.length; i++){
                     let str_status = "";
-                    if(r.list[i].di_status == 1) str_status = "대형 출판사"
-                    if(r.list[i].di_status == 2) str_status = "소형 출판사"
-                    if(r.list[i].di_status == 3) str_status = "독립 출판사"
-                    if(r.list[i].di_status == 4) str_status = "1인 출판사"
+                    if(r.list[i].ci_status == 1) str_status = "대형 출판사"
+                    if(r.list[i].ci_status == 2) str_status = "소형 출판사"
+                    if(r.list[i].ci_status == 3) str_status = "독립 출판사"
+                    if(r.list[i].ci_status == 4) str_status = "1인 출판사"
 
                     let tag=
                     '<li>'+
@@ -36,8 +36,8 @@ $(function() {
                     let seq = $(this).attr("data-co-seq");
                     let name = $(this).html();
 
-                    $("#writer_company").attr("data-co-seq", seq);
-                    $("#writer_company").val(name);
+                    $("#wi_company").attr("data-co-seq", seq);
+                    $("#wi_company").val(name);
 
                     $(".seacher_result ul").html("");
                     $("#company_keyword").val("");
@@ -58,15 +58,13 @@ $(function() {
             let wi_name = $("#wi_name").val();
             let wi_birth = $("#wi_birth").val();
             let wi_email = $("#wi_email").val();
-            let wi_company = $("#wi_company").val();
-            let wi_company_seq = $("#wi_ci_seq").attr("data-co-seq");
+            let wi_company = $("#wi_company").attr("data-co-seq");
 
             let data = {
                 wi_name:wi_name,
                 wi_birth:wi_birth,
                 wi_email:wi_email,
-                wi_company:wi_company,
-                wi_ci_seq:wi_company_seq
+                wi_ci_seq:wi_company
             }
         $.ajax({
             type:"post",
@@ -86,7 +84,8 @@ $(function() {
             $("#wi_name").val("");
             $("#wi_birth").val("");
             $("#wi_email").val("");
-            $("#wi_company").val("");
+            $("#wi_company").val("data-co-seq", "");
+
             $(".popup_wrap").removeClass("open");
         })
 
@@ -121,6 +120,7 @@ $(function() {
                     $("#wi_name").val(r.data.wi_name);
                     $("#wi_birth").val(r.data.wi_birth);
                     $("#wi_email").val(r.data.wi_email);
+                    $("#wi_company").attr("data-co-seq", r.wi_ci_seq);
                     $("#wi_company").val(r.data.wi_company);
                 }
             })
@@ -131,15 +131,16 @@ $(function() {
             let wi_name = $("#wi_name").val();
             let wi_birth= $("#wi_birth").val();
             let wi_email= $("#wi_email").val();
-            let wi_company= $("#wi_company").val();
+            let wi_company= $("#wi_company").attr("data-co-seq");
 
             let data = {
                 wi_seq:modify_data_seq,
                 wi_name:wi_name,
                 wi_birth:wi_birth,
                 wi_email:wi_email,
-                wi_company:wi_company,
-            }
+                wi_ci_seq:wi_company
+                }
+                
             $.ajax({
                 type:"patch",
                 url:"/writer/update",
@@ -152,9 +153,12 @@ $(function() {
             })
         })
 
-        $("#search_btn").click(function(){
-            location.href = "/writer?type="+type+"&keyword="+keyword;
-        })
+    $("#search_btn").click(function(){
+        let type = $("#search_type option:selected").val();
+        let keyword = $("#keyword").val();
+
+        location.href = "/writer?type="+type+"&keyword="+keyword;
+    })
         $("#keyword").keydown(function(e){
             console.log(e.keyCode)
             if(e.keyCode == 13) {

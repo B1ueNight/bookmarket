@@ -1,5 +1,6 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -14,6 +15,7 @@
 </head>
 <body>
     <main>
+        
         <h1><i class="fas fa-pen-fancy"></i> 작가 관리</h1>
         <button id="add_category"><i class="fas fa-plus-circle"></i>작가 추가</button>
         <div class="content_area">
@@ -55,8 +57,8 @@
                             <td>${w.wi_birth}</td>
                             <td>${w.wi_email}</td>
                             <td>${w.wi_company}</td>
-                            <td>${w.wi_reg_dt}</td>
-                            <td>${w.wi_mod_dt}</td>
+                            <td><fmt:formatDate value="${w.wi_reg_dt}" pattern="yyyy년-MM월-dd일 (EE) HH:mm:ss"/></td>
+                            <td><fmt:formatDate value="${w.wi_mod_dt}" pattern="yyyy년-MM월-dd일 (EE) HH:mm:ss"/></td>
                             <td>
                                 <button class="modify_btn" data-seq="${w.wi_seq}"><i class="fas fa-pencil-alt"></i></button>
                                 <button class="delete_btn" data-seq="${w.wi_seq}"><i class="fas fa-minus-circle"></i></button>
@@ -70,7 +72,7 @@
             <button id="prev"><i class="fas fa-chevron-left"></i></button>
             <div class="pagers">
                 <c:forEach begin="1" end="${data.pageCnt}" var="i">
-                    <a href="/writer?offset=${(i-1)*10}"${i}></a>
+                    <a href="/writer?offset=${(i-1)*10}&type=${type}&keyword=${keyword}">${i}</a>
                 </c:forEach>
             </div>
             <button id="next"><i class="fas fa-chevron-right"></i></button>
@@ -97,6 +99,7 @@
             </div>
             <div class="btn_area">
                 <button id="add_cate">등록하기</button>
+                <button id="modify_cate">수정하기</button>
                 <button id="cancel_cate">취소하기</button>
             </div>
         </div>

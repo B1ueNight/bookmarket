@@ -1,5 +1,8 @@
 package com.csixhsix.bookmarket.mapper;
 
+
+import java.util.Date;
+
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
@@ -16,5 +19,9 @@ public interface StoreBoardMapper {
     public Integer TotalCompanyCnt();
 
     public Integer TotalWriterCnt();
+
+    public Date getBookUpdateDate();
+    public Date getCompanyUpdateDate();
+    public Date getWriterUpdateDate();
 
 }

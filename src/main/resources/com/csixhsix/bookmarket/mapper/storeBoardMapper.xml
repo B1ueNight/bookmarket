@@ -34,4 +34,14 @@
     <select id="TotalWriterCnt" resultType="java.lang.Integer">
         select count(*) from writer_info
     </select>
+
+    <select id="getBookUpdateDate" resultType="java.util.Date">
+        select bkh_reg_dt from book_history order by bkh_reg_dt desc limit 1
+    </select>
+    <select id="getCompanyUpdateDate" resultType="java.util.Date">
+        select coph_reg_dt from company_history order by coph_reg_dt desc limit 1
+    </select>
+    <select id="getWriterUpdateDate" resultType="java.util.Date">
+        select wrih_reg_dt from writer_history order by wrih_reg_dt desc limit 1
+    </select>
 </mapper>

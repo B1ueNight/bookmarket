@@ -3,25 +3,39 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.csixhsix.bookmarket.mapper.BookMapper">
     <select id="getBookInfo" resultType="com.csixhsix.bookmarket.data.BookVO">
-        select * from book_info where bi_name like #{keyword} order by bi_seq desc limit 10 offset #{offset}
+        select * from
+        (
+            select a.*, b.cate_name as bi_cate from book_info a left outer join category_info b on a.bi_ci_seq = b.cate_seq 
+        ) c
+        where bi_name like #{keyword} order by bi_seq desc limit 10 offset #{offset}
     </select>
     <select id="getBookCount" resultType="java.lang.Integer">
         select count(*) from book_info where bi_name like #{keyword}
     </select>
     <insert id="addBook">
-        INSERT INTO bookstore_work_db.book_info (bi_name, bi_sub, bi_company, bi_cate, bi_status, bi_stock, bi_pub_dt, bi_writer, bi_point)
-        VALUES(#{bi_name}, #{bi_sub}, #{bi_company}, #{bi_cate}, #{bi_status}, #{bi_stock}, #{bi_pub_dt}, #{bi_writer}, #{bi_point});
+        INSERT INTO book_info (bi_ci_seq, bi_name, bi_code, bi_company, bi_status, bi_stock, bi_pub_dt, bi_writer, bi_point, bi_mod_dt)
+        VALUES(#{bi_ci_seq}, #{bi_name}, #{bi_code}, #{bi_company}, #{bi_status}, #{bi_stock}, #{bi_pub_dt}, #{bi_writer}, #{bi_point}, NOW());
     </insert>
     <delete id="deleteBook">
         delete from book_info where bi_seq=#{seq}
     </delete>
-    <select id="getbookInfoBySeq" resultType="com.csixhsix.bookmarket.data.BookVO">
-        select * from book_info where bi_seq=#{seq}
+    <select id="getBookInfoBySeq" resultType="com.csixhsix.bookmarket.data.BookVO">
+        <!-- select * from book_info where bi_seq=#{seq} -->
+        select a.*, b.cate_name as bi_cate_name from book_info a left outer join category_info b on a.bi_ci_seq = b.cate_seq
+        where bi_seq=#{seq}
     </select>
     <update id="modifyBook">
-        update book_info
+        update book_info set bi_name=#{bi_name}, bi_code=#{bi_code}, bi_company=#{bi_company}, bi_status=#{bi_status}, bi_writer=#{bi_writer},
+        bi_point=#{bi_point}, bi_mod_dt=NOW() where bi_seq=#{bi_seq}
     </update>
     <select id="getBookByKeyword" resultType="com.csixhsix.bookmarket.data.BookVO">
         select bi_seq, bi_name from book_info where bi_name like #{keyword}
     </select>
+    <select id="selectLatestDataSeq" resultType="java.lang.Integer">
+        select bi_seq from book_info order by bi_seq desc limit 1
+    </select>
+    <insert id="insertBookHistory">
+        insert INTO bookstore_work_db.book_history(bkh_type, bkh_content, bkh_book_seq)
+        VALUES(#{bkh_type}, #{bkh_content}, #{bkh_book_seq})
+    </insert>
 </mapper>

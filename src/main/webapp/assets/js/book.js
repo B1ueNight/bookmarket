@@ -29,8 +29,8 @@ $(function() {
                         let seq = $(this).attr("data-cate-seq");
                         let name = $(this).html();
     
-                        $("#book_cate_name").attr("data-cate-seq", seq);
-                        $("#book_cate_name").val(name);
+                        $("#bi_cate_name").attr("data-cate-seq", seq);
+                        $("#bi_cate_name").val(name);
     
                         $(".seacher_result ul").html("");
                         $("#cate_keyword").val("");
@@ -51,28 +51,30 @@ $(function() {
             if(confirm("도서를 등록하시겠습니까?") == false) return;
             let bi_cate_name = $("#bi_cate_name").attr("data-cate-seq");
             let bi_name = $("#bi_name").val();
-            let bi_sub= $("#bi_sub").val();
+            let bi_code= $("#bi_code").val();
             let bi_writer = $("#bi_writer").val();
             let bi_company = $("#bi_company").val();
-            let bi_category = $("#bi_cate_name").val();
             let bi_status = $("#bi_status option:selected").val();
             let bi_stock = $("#bi_stock").val();
-            let bi_publishing_time = $("#bi_publishing_time").val();
+            let bi_pub_dt = $("#bi_pub_dt").val();
             let bi_point = $("#bi_point").val();
-    
 
+            if(bi_cate_name == undefined){
+                alert("카테고리를 입력해주세요");
+                return;
+            }
             let data = {
-                bi_cate_name:bi_cate_name,
+                bi_ci_seq:bi_cate_name,
                 bi_name:bi_name,
-                bi_sub:bi_sub,
+                bi_code:bi_code,
                 bi_writer:bi_writer,
                 bi_company:bi_company,
-                bi_category:bi_category,
                 bi_status:bi_status,
                 bi_stock:bi_stock,
-                bi_publishing_time:bi_publishing_time,
+                bi_pub_dt:bi_pub_dt,
                 bi_point:bi_point
             }
+            console.log(data);
         $.ajax({
             type:"post",
             url:"/book/add",
@@ -90,13 +92,12 @@ $(function() {
 
             $("#book_cate_name").val("data-cate-seq", "");
             $("#bi_name").val("");
-            $("#bi_sub").val("");
+            $("#bi_code").val("");
             $("#bi_writer").val("");
             $("#bi_company").val("");
-            $("#bi_category").val("");
             $("#bi_status").val("").val("1").prop("selected", true);
             $("#bi_stock").val("");
-            $("#bi_publishing_time").val("");
+            $("#bi_pub_dt").val("");
             $("#bi_point").val("");
             
             $(".popup_wrap").removeClass("open");
@@ -130,43 +131,43 @@ $(function() {
                 url:"/book/get?seq="+$(this).attr("data-seq"),
                 success:function(r) {
                     console.log(r);
-                    $("#book_cate_name").val(r.data.bi_cate_name);
-                    $("#book_name").val(r.data.bi_name);
-                    $("#book_sub").val(r.data.bi_sub);
-                    $("#book_writer").val(r.data.bi_writer);
-                    $("#book_company").val(r.data.bi_company);
-                    $("#book_category").val(r.data.bi_category);
-                    $("#book_status").val(r.data.bi_status).prop("selected", true);
-                    $("#book_stock").val(r.data.bi_stock);
-                    $("#book_publishing_time").val(r.data.bi_publishing_time);
-                    $("#book_point").val(r.data.bi_point);
+                    $("#bi_cate_name").attr("data-cate-seq", r.bi_ci_seq);
+                    $("#bi_cate_name").val(r.data.bi_cate_name);
+                    $("#bi_name").val(r.data.bi_name);
+                    $("#bi_code").val("******").prop("disabled", true);
+                    $("#bi_writer").val(r.data.bi_writer);
+                    $("#bi_company").val(r.data.bi_company);
+                    $("#bi_status").val(r.data.bi_status).prop("selected", true);
+                    $("#bi_stock").val(r.data.bi_stock);
+                    $("#bi_pub_dt").val(r.data.bi_pub_dt);
+                    $("#bi_point").val(r.data.bi_point);
                 }
             })
         })
 
         $("#modify_cate").click(function(){
             if(confirm("수정하시겠습니까?") == false) return;
-            let book_name = $("#book_name").val();
-            let book_sub = $("#book_sub").val();
-            let book_writer = $("#book_writer").val();
-            let book_company = $("#book_company").val();
-            let book_category = $("#book_category").val();
-            let book_status = $("#book_status option:selected").val();
-            let book_stock = $("#book_stock").val();
-            let book_publishing_time = $("#book_publishing_time").val();
-            let book_point = $("#book_point").val();
+            let bi_cate_name = $("#bi_cate_name").attr("data-cate-seq");
+            let bi_name = $("#bi_name").val();
+            let bi_code= $("#bi_code").val();
+            let bi_writer = $("#bi_writer").val();
+            let bi_company = $("#bi_company").val();
+            let bi_status = $("#bi_status option:selected").val();
+            let bi_stock = $("#bi_stock").val();
+            let bi_pub_dt = $("#bi_pub_dt").val();
+            let bi_point = $("#bi_point").val();
 
             let data = {
                 bi_seq:modify_data_seq,
-                bi_name:book_name,
-                bi_sub:book_sub,
-                bi_writer:book_writer,
-                bi_company:book_company,
-                bi_category:book_category,
-                bi_status:book_status,
-                bi_stock:book_stock,
-                bi_publishing_time:book_publishing_time,
-                bi_point:book_point
+                bi_ci_seq:bi_cate_name,
+                bi_name:bi_name,
+                bi_code:bi_code,
+                bi_writer:bi_writer,
+                bi_company:bi_company,
+                bi_status:bi_status,
+                bi_stock:bi_stock,
+                bi_pub_dt:bi_pub_dt,
+                bi_point:bi_point
             }
             $.ajax({
                 type:"patch",
@@ -177,32 +178,6 @@ $(function() {
                     alert(r.message);
                     location.reload();
                 }
-            })
-        })
-
-        $("#modify_cate").click(function(){
-            if(confirm("수정하시겠습니까?") == false) return;
-            let data = {
-                        bi_seq:modify_data_seq,
-                        bi_name:$("#book_name").val(),
-                        bi_sub:$("#book_sub").val(),
-                        bi_writer:$("#book_writer").val(),
-                        bi_company:$("#book_company").val(),
-                        bi_category:$("#book_cate_name").val(),
-                        bi_status:$("#book_status option:selected").val(),
-                        bi_stock:$("#book_stock").val(),
-                        bi_publishing_time:$("#book_publishing_time").val(),
-                        bi_point:$("#book_point").val()
-                        }
-                $.ajax({
-                    type:"patch",
-                    url:"/book/modify",
-                    data:JSON.stringify(data),
-                    contentType:"application/json",
-                    success:function(r) {
-                        alert(r.message);
-                        location.reload();
-                    }
             })
         })
 

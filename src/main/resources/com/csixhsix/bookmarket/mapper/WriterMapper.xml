@@ -2,7 +2,28 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.csixhsix.bookmarket.mapper.WriterMapper">
-
+    <select id="getWriterList" resultType="com.csixhsix.bookmarket.data.WriterVO">
+        select wi_seq, wi_company, wi_name, wi_birth, wi_email, wi_company, wi_reg_dt, wi_mod_dt from 
+        (select a.*, b.ci_name as wi_company from writer_info a left outer join company_info b
+        on a.wi_ci_seq = b.ci_seq ) c
+        <if test="type == 'company'">
+            where wi_company like #{keyword}
+        </if>
+        <if test="type == 'name'">
+            where wi_name like #{keyword}
+        </if>
+        order by wi_seq desc limit 10 offset #{offset}
+    </select>
+    <select id="getWriterCnt" resultType="java.lang.Integer">
+        select count(*) from (select a.*, b.ci_name as company_name from writer_info a left outer join company_info b
+        on a.wi_ci_seq = b.ci_seq ) c
+        <if test="type == 'company'">
+            where company_name like #{keyword}
+        </if>
+        <if test="type == 'name'">
+            where wi_name like #{keyword}
+        </if>
+    </select>
     <select id="getWriterInfo" resultType="com.csixhsix.bookmarket.data.WriterVO">
         select * from writer_info order by wi_seq desc limit 10 offset #{offset}
     </select>
@@ -10,10 +31,26 @@
         select count(*) from writer_info
     </select>
     <insert id="addWriter">
-        insert into writer_info (wi_name, wi_birth, wi_email, wi_company)
-        values(#{wi_name}, #{wi_birth}, #{wi_email}, #{wi_company})
+        insert into writer_info (wi_name, wi_birth, wi_email, wi_ci_seq)
+        values(#{wi_name}, #{wi_birth}, #{wi_email}, #{wi_ci_seq})
     </insert>
     <delete id="deleteWriter">
         delete from writer_info where wi_seq=#{seq}
     </delete>
+    <update id="updateWriter">
+        update writer_info
+        set wi_name=#{wi_name}, wi_birth=#{wi_birth}, wi_email=#{wi_email}, wi_ci_seq=#{wi_ci_seq}, wi_mod_dt=NOW() where wi_seq=#{wi_seq}
+    </update>
+
+
+    <select id="selectLatestDataSeq" resultType="java.lang.Integer">
+        select wi_seq from writer_info order by wi_seq desc limit 1
+    </select>
+    <insert id="insertWriterHistory">
+        insert INTO bookstore_work_db.writer_history(wrih_type, wrih_content, wrih_writer_seq)
+        VALUES(#{wrih_type}, #{wrih_content}, #{wrih_writer_seq})
+    </insert>
+    <select id="getWriterInfoBySeq" resultType="com.csixhsix.bookmarket.data.WriterVO">
+        select * from writer_info where wi_seq=#{seq}
+    </select>
 </mapper>

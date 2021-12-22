@@ -31,6 +31,6 @@
         VALUES(#{coph_type}, #{coph_content}, #{coph_cop_seq})
     </insert>
     <select id="getCompanyByKeyword" resultType="com.csixhsix.bookmarket.data.CompanyVO">
-        select ci_seq, ci_name from company_info where ci_name like #{keyword}
+        select ci_seq, ci_name, ci_status from company_info where ci_name like #{keyword}
     </select>
 </mapper>

@@ -1,5 +1,6 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -62,7 +63,7 @@
                             <td>${co.ci_phone}</td>
                             <td>${co.ci_email}</td>
                             <td>${co.ci_address}</td>
-                            <td>${co.ci_reg_dt}</td>
+                            <td><fmt:formatDate value="${b.bi_reg_dt}" pattern="yyyy년-MM월-dd일 (EE) HH:mm:ss"/></td>
                             <td>
                                 <button class="modify_btn" data-seq="${co.ci_seq}"><i class="fas fa-pencil-alt"></i></button>
                                 <button class="delete_btn" data-seq="${co.ci_seq}"><i class="fas fa-minus-circle"></i></button>

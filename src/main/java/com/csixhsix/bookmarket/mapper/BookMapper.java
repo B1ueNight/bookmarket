@@ -2,6 +2,7 @@ package com.csixhsix.bookmarket.mapper;
 
 import java.util.List;
 
+import com.csixhsix.bookmarket.data.BookHistoryVO;
 import com.csixhsix.bookmarket.data.BookVO;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -15,8 +16,8 @@ public interface BookMapper {
     public BookVO getBookInfoBySeq(Integer seq);
     public void modifyBook(BookVO data);
 
-    // public Integer selectLatestDataSeq();
-    // public void insertCategoryHistory(CategoryHistoryVO data);
+    public Integer selectLatestDataSeq();
+    public void insertBookHistory(BookHistoryVO data);
 
     public List<BookVO> getBookByKeyword(String keyword);
 }

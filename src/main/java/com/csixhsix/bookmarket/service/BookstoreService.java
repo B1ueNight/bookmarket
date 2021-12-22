@@ -40,4 +40,14 @@ public class BookstoreService {
         return map;
     
     }
+
+    public Map<String,Object> getUpdateDate() {
+        Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
+
+        resultMap.put("book", mapper.getBookUpdateDate());
+        resultMap.put("writer", mapper.getWriterUpdateDate());
+        resultMap.put("company", mapper.getCompanyUpdateDate());
+
+        return resultMap;
+    }
 }

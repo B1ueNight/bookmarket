@@ -1,5 +1,6 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -30,7 +31,6 @@
                     <tr>
                     <th>번호</th>
                     <th>제목</th>
-                    <th>소개</th>
                     <th>저자</th>
                     <th>출판사</th>
                     <th>카테고리</th>
@@ -53,7 +53,6 @@
                         <tr>
                             <td>${b.bi_seq}</td>
                             <td>${b.bi_name}</td>
-                            <td>${b.bi_sub}</td>
                             <td>${b.bi_writer}</td>
                             <td>${b.bi_company}</td>
                             <td>${b.bi_cate}</td>
@@ -72,8 +71,8 @@
                                 </c:if>
                             </td>
                             <td>${b.bi_pub_dt}</td>
-                            <td>${b.bi_reg_dt}</td>
-                            <td>${b.bi_mod_dt}</td>
+                            <td><fmt:formatDate value="${b.bi_reg_dt}" pattern="yyyy년-MM월-dd일 (EE) HH:mm:ss"/></td>
+                            <td><fmt:formatDate value="${b.bi_mod_dt}" pattern="yyyy년-MM월-dd일 (EE) HH:mm:ss"/></td>
                             <td>${b.bi_stock}</td>
                             <td>${b.bi_point}</td>
                             <td>
@@ -109,7 +108,7 @@
                 <input type="text" id="bi_cate_name" placeholder="카테고리" disabled>
                 <button id="search_cate">카테고리 선택</button>
                 <input type="text" id="bi_name" placeholder="도서명">
-                <input type="text" id="bi_sub" placeholder="소제목, 소개">
+                <input type="text" id="bi_code" placeholder="도서코드">
                 <input type="text" id="bi_writer" placeholder="저자,번역가">
                 <input type="text" id="bi_company" placeholder="출판사">
                 <input type="text" id="bi_pub_dt" placeholder="출판일(.을 제외한 숫자 8자리)">
@@ -124,6 +123,7 @@
             </div>
             <div class="btn_area">
                 <button id="add_cate">등록하기</button>
+                <button id="modify_cate">수정하기</button>
                 <button id="cancel_cate">취소하기</button>
             </div>
             <div class="category_search">
