@@ -18,7 +18,7 @@
 </head>
 <body>
     <main>
-        <h1>북마켓 대시보드(Book Market DashBoard)</h1>
+        <h1>도서 정보 관리 대시보드(Book Market DashBoard)</h1>
         <div class="content_area">
             <div class="book_area">
                 <h2>도서 정보</h2>

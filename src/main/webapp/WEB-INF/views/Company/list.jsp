@@ -48,16 +48,16 @@
                             <td>${co.ci_name}</td>
                             <td class="company_status">
                                 <c:if test="${co.ci_status == 1}">
-                                    <span style="background-color: rgb(17, 226, 27)">대형 출판사</span>
+                                    <span style="background-color: rgb(0, 128, 255)">대형 출판사</span>
                                 </c:if>
                                 <c:if test="${co.ci_status == 2}">
-                                    <span style="background-color: rgb(251, 186, 64)">소형 출판사</span>
+                                    <span style="background-color: rgb(0, 51, 255)">소형 출판사</span>
                                 </c:if>
                                 <c:if test="${co.ci_status == 3}">
-                                    <span style="background-color: rgb(255, 110, 26)">독립 출판사</span>
+                                    <span style="background-color: rgb(97, 53, 255)">독립 출판사</span>
                                 </c:if>
                                 <c:if test="${co.ci_status == 4}">
-                                    <span style="background-color: rgb(255, 23, 23)">1인 출판사</span>
+                                    <span style="background-color: rgb(105, 0, 181)">1인 출판사</span>
                                 </c:if>
                             </td>
                             <td>${co.ci_phone}</td>
