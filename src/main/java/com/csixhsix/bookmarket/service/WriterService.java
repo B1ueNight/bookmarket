@@ -46,12 +46,12 @@ public class WriterService {
         Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
         if(data.getWi_name() == null || data.getWi_name().equals("")) {
             resultMap.put("status", false);
-            resultMap.put("message", "출판사명을 입력하세요");
+            resultMap.put("message", "작가명을 입력하세요");
             return resultMap;
         }
         if(data.getWi_email()== null || data.getWi_email().equals("")) {
             resultMap.put("status", false);
-            resultMap.put("message", "이메일를 입력하세요");
+            resultMap.put("message", "이메일을 입력하세요");
             return resultMap;
         }
         if(data.getWi_birth()== null || data.getWi_birth().equals("")) {

@@ -48,7 +48,7 @@ public class CompanyService {
         }
         if(data.getCi_email()== null || data.getCi_email().equals("")) {
             resultMap.put("status", false);
-            resultMap.put("message", "이메일를 입력하세요");
+            resultMap.put("message", "이메일을 입력하세요");
             return resultMap;
         }
         if(data.getCi_phone()== null || data.getCi_phone().equals("")) {
